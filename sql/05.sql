@@ -25,6 +25,6 @@ WHERE description like 'District%'),
 police_pop AS (SELECT area_id, population,  district_id, count_officers, unit_name
 FROM district_names JOIN police_districts ON CAST(district_id as integer) = last_unit_id)
 
-SELECT unit_name, (CAST(count_officers AS float) / CAST(population as float)) * 10000 as per_capita
+SELECT unit_name as district_name, (CAST(count_officers AS float) / CAST(population as float)) * 10000 as per_capita
 FROM police_pop
-ORDER BY per_capita DESC
+ORDER BY per_capita DESC;
