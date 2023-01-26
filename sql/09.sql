@@ -5,7 +5,7 @@
  */
 WITH year_finding as (SELECT EXTRACT(YEAR FROM end_date) AS year, final_finding
 FROM data_officerallegation
-WHERE (final_finding = 'SU' or final_finding = 'EX') AND end_date IS NOT NULL)
+WHERE (final_finding = 'SU' or final_finding = 'EX'))
 
 SELECT year, COUNT(final_finding) AS allegations_SU_or_EX
 FROM year_finding
