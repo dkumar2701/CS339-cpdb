@@ -6,11 +6,12 @@
  */
 
  --Make a pairing of officer id's where left id is smaller than right
+ 
 WITH officer_set as (
     SELECT last_unit_id, officer_id, allegation_id
     FROM data_officer JOIN data_officerallegation on data_officer.id = data_officerallegation.officer_id)
 
-SELECT l.officer_id as officer1, r.officer_id as officer2, l.last_unit_id as officer1_lastunit,
+SELECT distinct l.officer_id as officer1, r.officer_id as officer2, l.last_unit_id as officer1_lastunit, --added distinct to find unique rows
        r.last_unit_id as officer2_lastunit
 FROM officer_set as l JOIN officer_set as r
     ON l.allegation_id = r.allegation_id
