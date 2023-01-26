@@ -5,7 +5,6 @@
  Hint: The allegation_count field in data_officer will count the allegations, but not the complaint reports.
  */
 
-
 WITH bad_officers as(SELECT officer_id
 FROM data_officerallegation
 GROUP BY officer_id
