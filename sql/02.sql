@@ -1,3 +1,8 @@
+/*
+ What percent of complaint reports are filed by officers?  Please scale your answer to the range of (0.0...100.0).
+ Hint: you may need to cast any counts to floats your percentage.
+ */
+
 WITH complaint AS (
     SELECT COUNT(DISTINCT crid) AS complaints
     FROM data_allegation
