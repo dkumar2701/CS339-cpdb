@@ -1,5 +1,5 @@
 
-WITH officer_counts AS (SELECT o.last_unit_id, COUNT(first_name) as count_officers
+WITH officer_counts AS (SELECT o.last_unit_id, COUNT(id) as count_officers
                         FROM data_officer o
                         WHERE o.active = 'Yes'
                           AND o.last_unit_id IS NOT NULL
