@@ -6,6 +6,7 @@
  */
 
  --Make a pairing of officer id's where left id is smaller than right
+ 
 WITH officer_set as (
     SELECT last_unit_id, officer_id, allegation_id
     FROM data_officer JOIN data_officerallegation on data_officer.id = data_officerallegation.officer_id)
