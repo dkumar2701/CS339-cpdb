@@ -7,7 +7,50 @@
  data_racepopulation. You may need to do some string manipulation to line up the unit names.
  */
 
+--Final Query: data_area.commander_id references data_officer, dataofficer.last_unit_id references data_policeunit.id
+WITH area_pop AS (
+    SELECT area_id, SUM(count) as population
+    FROM data_racepopulation
+    GROUP BY area_id
+    ORDER BY area_id
+), district_names as (SELECT p.area_id, SUBSTRING(a.name, 1, LENGTH(a.name) -2) as district_id, p.population
+                     FROM area_pop p
+                     JOIN (SELECT * FROM data_area WHERE area_type = 'police-districts') a
+                        ON p.area_id = a.id
+                     ORDER BY p.area_id)
 
+, officer_counts AS (SELECT o.last_unit_id, COUNT(id) as count_officers
+                        FROM data_officer o
+                        WHERE o.active = 'Yes'
+                          AND o.last_unit_id IS NOT NULL
+                        GROUP BY o.last_unit_id
+                        ORDER BY o.last_unit_id)
+
+, officers_district AS(SELECT c.last_unit_id, c.count_officers, u.description, u.unit_name
+FROM officer_counts c JOIN data_policeunit u ON c.last_unit_id = u.id)
+
+SELECT od.unit_name as district_name, (CAST(od.count_officers AS float) / CAST(dn.population as float)) * 10000
+    AS per_capita
+FROM officers_district od JOIN district_names dn ON CAST(od.unit_name AS INTEGER) = CAST(dn.district_id as INTEGER)
+ORDER BY per_capita DESC;
+
+
+
+
+--Calculating population per area_id
+/*
+
+--Police count per district
+
+
+
+
+
+
+
+
+
+-- My original Version
 WITH officer_counts AS (SELECT o.last_unit_id, COUNT(id) as count_officers
                         FROM data_officer o
                         WHERE o.active = 'Yes'
